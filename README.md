@@ -26,7 +26,7 @@ tables: **users**, **songs**, **artists** and **time**.
   (SELECT * 
   FROM songplays JOIN songs ON songplays.song_id = songs.song_id) a
   GROUP BY a.song_id
-  ORDER BY bumber_played DESC
+  ORDER BY number_played DESC
 ```
 
 ## Code Explanations
