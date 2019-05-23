@@ -1,5 +1,5 @@
 import psycopg2
-from sql_queries import create_table_queries, drop_table_queries
+from sql_queries import create_table_queries, drop_table_queries, database_drop, database_create
 
 
 def create_database():
@@ -15,8 +15,8 @@ def create_database():
     cur = conn.cursor()
     
     # create sparkify database with UTF8 encoding
-    cur.execute("DROP DATABASE IF EXISTS sparkifydb")
-    cur.execute("CREATE DATABASE sparkifydb WITH ENCODING 'utf8' TEMPLATE template0")
+    cur.execute(database_drop)
+    cur.execute(database_create)
 
     # close connection to default database
     conn.close()    

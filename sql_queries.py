@@ -6,9 +6,13 @@ song_table_drop = "DROP TABLE IF EXISTS songs"
 artist_table_drop = "DROP TABLE IF EXISTS artists"
 time_table_drop = "DROP TABLE IF EXISTS time"
 
+# DROP DATABASE
+database_drop = "DROP DATABASE IF EXISTS sparkifydb"
+database_create = "CREATE DATABASE sparkifydb WITH ENCODING 'utf8' TEMPLATE template0"
+
 # CREATE TABLES
 
-songplay_table_create = ("CREATE TABLE IF NOT EXISTS songplays (songplay_id int PRIMARY KEY, \
+songplay_table_create = ("CREATE TABLE IF NOT EXISTS songplays (songplay_id serial PRIMARY KEY, \
                                                                 start_time timestamp NOT NULL, \
                                                                 user_id int NOT NULL, \
                                                                 level varchar, \
@@ -46,14 +50,13 @@ time_table_create = ("CREATE TABLE IF NOT EXISTS time (start_time timestamp PRIM
 
 # INSERT RECORDS
 
-songplay_table_insert = "INSERT INTO songplays (songplay_id, start_time, user_id, level, song_id, artist_id, session_id,\
+songplay_table_insert = "INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id,\
                                                 location, user_agent) \
-                                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)\
-                                                ON CONFLICT (songplay_id) DO NOTHING"
+                                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 
 user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level) \
                             VALUES (%s, %s, %s, %s, %s) \
-                            ON CONFLICT (user_id) DO NOTHING"
+                            ON CONFLICT (user_id) DO UPDATE SET level = EXCLUDED.level"
 
 song_table_insert = "INSERT INTO songs (song_id, title, artist_id, year, duration) \
                             VALUES (%s, %s, %s, %s, %s) \

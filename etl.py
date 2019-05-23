@@ -19,7 +19,6 @@ def process_song_file(cur, filepath):
     # insert song record
     song_data = [df.song_id.values.tolist()[0], df.title.values.tolist()[0],
                  df.artist_id.values.tolist()[0], df.year.values.tolist()[0], df.duration.values.tolist()[0]]
-    print(song_data)
     cur.execute(song_table_insert, song_data)
     
     # insert artist record
@@ -86,7 +85,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index, pd.to_datetime(row.ts, unit='ms'),
+        songplay_data = (pd.to_datetime(row.ts, unit='ms'),
                          row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
 
